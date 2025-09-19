@@ -5,12 +5,62 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- https://fonts.google.com/specimen/Vollkorn?selection.family=Vollkorn:400,400i,700,700i -->
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i,700,700i" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <script src="/script.js" defer></script>
+
+    <!-- Pendo Snippet -->
+    <script>
+      (function(p,e,n,d){
+        var w=p[d]=p[d]||{};
+        w._q=[];
+        var v=['initialize','identify','updateOptions','pageLoad','track'];
+        for(var i=0;i<v.length;i++){
+          (function(m){
+            w[m]=w[m]||function(){
+              w._q.push([m].concat([].slice.call(arguments,0)));
+            };
+          })(v[i]);
+        }
+        var s=e.createElement(n);
+        s.async=true;
+        s.src='https://cdn.pendo.io/agent/static/1cc88766-c269-4c89-894d-becc8edda723/pendo.js';
+        var x=e.getElementsByTagName(n)[0];
+        x.parentNode.insertBefore(s,x);
+      })(window,document,'script','pendo');
+
+      pendo.initialize({
+        visitor: { id: 'VISITOR-123' }, // Replace with dynamic visitor id in real app
+        account: { id: 'ACCOUNT-456' }  // Replace with dynamic account id in real app
+      });
+    </script>
   </head>  
   <body>
     <h1>Hello, World!</h1>
+    <p>Welcome to the Pendo test page. Try clicking the buttons below:</p>
+
+    <button id="btn1">Click Me!</button>
+    <button id="btn2">Another Button</button>
+    <button id="btn3">Track with Pendo</button>
+
+    <script>
+      document.getElementById('btn1').addEventListener('click', () => {
+        alert('Button 1 clicked!');
+      });
+
+      document.getElementById('btn2').addEventListener('click', () => {
+        alert('Button 2 clicked!');
+      });
+
+      document.getElementById('btn3').addEventListener('click', () => {
+        if (window.pendo) {
+          pendo.track("custom_button_click", { button: "btn3" });
+          alert('Button 3 clicked! Event sent to Pendo.');
+        } else {
+          alert('Pendo not loaded yet.');
+        }
+      });
+    </script>
   </body>
 </html>
